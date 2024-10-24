@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import uvicorn
 
 app = FastAPI()
@@ -12,11 +12,11 @@ async def docs():
 
 
 class Movie(BaseModel):
-    id: int
+    id: int = Field(min_length=1)
     title: str
     director: str
-    release_year: int
-    rating: float
+    release_year: int = Field(min_length=1, max_length=2024)
+    rating: float = Field(min_length=1, max_length=5)
 
 
 class ListMovie(BaseModel):
